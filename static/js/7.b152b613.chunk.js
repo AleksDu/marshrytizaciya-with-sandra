@@ -1,0 +1,2 @@
+(this["webpackJsonpmarshrytizaciya-with-sandra"]=this["webpackJsonpmarshrytizaciya-with-sandra"]||[]).push([[7],{81:function(t,a,r){"use strict";r.r(a),r.d(a,"default",(function(){return n}));var i=r(1);function n(){return Object(i.jsx)("h1",{children:"Home"})}}}]);
+//# sourceMappingURL=7.b152b613.chunk.js.map
