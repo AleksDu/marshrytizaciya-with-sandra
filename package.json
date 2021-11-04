@@ -4,10 +4,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "name": "react-35-4-hands",
+  "name": "marshrytizaciya-with-sandra",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://aleksdu.github.io/react-35-4-hands/",
+  "homepage": "https://aleksdu.github.io/marshrytizaciya-with-sandra/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",

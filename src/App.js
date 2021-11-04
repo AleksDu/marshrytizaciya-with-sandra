@@ -12,6 +12,9 @@ const PexelsPage = lazy(() =>
 const ProductsPage = lazy(() =>
   import("./pages/Products/Products" /* webpackChangName:' Products Page'   */)
 );
+const ImageCard = lazy(() =>
+  import("./views/PexelsImages/ImageCard" /* webpackChangeName: 'Image Card' */)
+);
 // import { SolidTitle } from './components/Titles/SolidTitle';
 function App() {
   //   const [counter, setCounter] = useState(0);
@@ -34,6 +37,9 @@ function App() {
 
           <Route path="/pexels">
             <PexelsPage title="Main Title" />
+          </Route>
+          <Route path="/pexels/:imageId">
+            <ImageCard />
           </Route>
           <Route path="/products" component={ProductsPage} />
           <Route>

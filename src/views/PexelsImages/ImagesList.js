@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { PexelsFetchObject } from "../../services/pexels";
 import { useLS } from "../../Hooks/useLS";
+import { Link } from "react-router-dom";
+import { useHistory, useLocation } from "react-router";
+
 const base_url = `https://api.pexels.com/v1/`;
 const api_key = `563492ad6f91700001000001390f9fee0a794c1182a72e49e0e0eae2`;
 // const zhenya_key = `563492ad6f917000010000018ad09ac3acee45ebbb46a78f456e8ffa`;
@@ -8,6 +11,7 @@ const newPexelsFetchObject = new PexelsFetchObject(base_url, api_key);
 // console.log(newPexelsFetchObject);
 
 export function ImagesList({ searchValue, perPage }) {
+  const location = useLocation();
   const [searchResults, setSearchResults] = useLS("pexelImages", []);
   const [status, setStatus] = useState("init");
   // =================
@@ -62,7 +66,16 @@ export function ImagesList({ searchValue, perPage }) {
           {searchResults.length > 0 &&
             searchResults.map((el) => (
               <li key={el.id}>
-                <img src={el.src.tiny} alt={el.photographer} />
+                
+                // to={{
+                //   pathname: `/pexels/${el.id}`,
+                //   state: {
+                //     from: location,
+                //     label: `back to pexels`,
+                //   },
+                // }}
+                
+                  <img src={el.src.tiny} alt={el.photographer} />
               </li>
             ))}
         </ul>
