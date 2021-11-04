@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Navigation } from "./Components/Navigation/Navigation";
 import "./App.css";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { Loader } from "./Components/Loader/Loader";
 const HomePage = lazy(() =>
   import("./pages/Home/Home" /* webpackChangName: 'Home Page'   */)
@@ -13,10 +13,14 @@ const ProductsPage = lazy(() =>
   import("./pages/Products/Products" /* webpackChangName:' Products Page'   */)
 );
 const ImageCard = lazy(() =>
-  import("./views/PexelsImages/ImageCard" /* webpackChangeName: 'Image Card' */)
+  import(
+    "./views/PexelsImages/ImageCard" /* webpackChangName:' Image Page'   */
+  )
 );
 // import { SolidTitle } from './components/Titles/SolidTitle';
 function App() {
+  const history = useHistory();
+  const location = useLocation();
   //   const [counter, setCounter] = useState(0);
   //   const [isOpen, setIsOpen] = useState(false);
   // === свои хуки
@@ -27,7 +31,9 @@ function App() {
   // - список
 
   // - список
-
+  const GoToHome = () => {
+    history.push(location?.state?.from?.location ?? "/");
+  };
   return (
     <div className="App">
       <Navigation />
@@ -38,12 +44,14 @@ function App() {
           <Route path="/pexels">
             <PexelsPage title="Main Title" />
           </Route>
-          <Route path="/pexels/:imageId">
-            <ImageCard />
+          <Route exact path="/pexels/:imageId">
+            <ImageCard title="Image title" />
           </Route>
-          <Route path="/products" component={ProductsPage} />
+          <Route exact path="/products" component={ProductsPage} />
           <Route>
-            <p>Page not found </p>
+            <button type="button" onClick={GoToHome}>
+              Go To Home
+            </button>
           </Route>
         </Switch>
       </Suspense>

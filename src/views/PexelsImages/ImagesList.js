@@ -59,23 +59,25 @@ export function ImagesList({ searchValue, perPage }) {
     return <h1>Wait please!</h1>;
   }
   if (status === "success") {
-    console.log("success", searchResults);
+    // console.log("success", searchResults);
     return (
       <>
         <ul style={{ display: "flex", flexFlow: "row wrap" }}>
           {searchResults.length > 0 &&
             searchResults.map((el) => (
               <li key={el.id}>
-                
-                // to={{
-                //   pathname: `/pexels/${el.id}`,
-                //   state: {
-                //     from: location,
-                //     label: `back to pexels`,
-                //   },
-                // }}
-                
+                <Link
+                  // to={`/pexels/${el.id}`}
+
+                  to={{
+                    pathname: `/pexels/${el.id}`,
+                    state: {
+                      from: { location, label: `back to pexels` },
+                    },
+                  }}
+                >
                   <img src={el.src.tiny} alt={el.photographer} />
+                </Link>
               </li>
             ))}
         </ul>

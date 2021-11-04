@@ -1,17 +1,16 @@
-import { useHistory, useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router-dom";
 
 export default function ImageCard() {
   const history = useHistory();
   const location = useLocation();
-  console.log(location);
-  //   console.log("card:", history);
+
   const handleClick = () => {
-    history.push("/pexels");
+    history.push(location?.state?.from?.location ?? "/pexels");
   };
   return (
     <>
       <button type="button" onClick={handleClick}>
-        back
+        Back
       </button>
 
       <h2>CARD</h2>
