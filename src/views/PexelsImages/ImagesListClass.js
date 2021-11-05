@@ -1,17 +1,16 @@
 import { Component } from "react";
 import { PexelsFetchObject } from "../../services/pexels";
-let base_url = `https://api.pexels.com/v1/`;
-let api_key = `563492ad6f9170000100000188f3b8d3cd1047e392f28560cf9684bd`;
-
+const base_url = `https://api.pexels.com/v1/`;
+const api_key = `563492ad6f91700001000001390f9fee0a794c1182a72e49e0e0eae2`;
+// const zhenya_key = `563492ad6f917000010000018ad09ac3acee45ebbb46a78f456e8ffa`;
 const newPexelsFetchObject = new PexelsFetchObject(base_url, api_key);
-console.log(newPexelsFetchObject);
+// console.log(newPexelsFetchObject);
 
 export class ImagesList extends Component {
   state = {
     searchResults: [],
     status: "init",
   };
-
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.searchValue !== this.props.searchValue ||
@@ -34,25 +33,29 @@ export class ImagesList extends Component {
         });
     }
   }
-
   handleClick = () => {
     newPexelsFetchObject.page = 1;
     console.log(newPexelsFetchObject.page);
-    newPexelsFetchObject.searchPhotos().then((searchResults) => {
-      console.log(searchResults);
-      this.setState((prev) => ({
-        searchResults: [...prev.searchResults, ...searchResults],
-        status: "success",
-      }));
-    });
+    newPexelsFetchObject
+      .searchPhotos()
+      .then((searchResults) => {
+        console.log(searchResults);
+        this.setState((prev) => ({
+          searchResults: [...prev.searchResults, ...searchResults],
+          status: "success",
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ status: "error" });
+      });
   };
-
   render() {
     if (this.state.status === "init") {
-      return <h1>Helo, search something</h1>;
+      return <h1>Hello! Search something</h1>;
     }
     if (this.state.status === "pending") {
-      return <h1>Loading</h1>;
+      return <h1>Wait please!</h1>;
     }
     if (this.state.status === "success") {
       return (
@@ -65,14 +68,13 @@ export class ImagesList extends Component {
             ))}
           </ul>
           <button type="button" onClick={this.handleClick}>
-            Load more
+            load more
           </button>
         </>
       );
     }
-
     if (this.state.status === "error") {
-      return <h1>Alarma!!!</h1>;
+      return <h1>ALARMA!!!</h1>;
     }
   }
 }

@@ -1,22 +1,11 @@
 import { lazy, Suspense } from "react";
 import { Navigation } from "./Components/Navigation/Navigation";
 import "./App.css";
-import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router";
+import { Route, Switch } from "react-router-dom";
 import { Loader } from "./Components/Loader/Loader";
-const HomePage = lazy(() =>
-  import("./pages/Home/Home" /* webpackChangName: 'Home Page'   */)
-);
-const PexelsPage = lazy(() =>
-  import("./pages/Pexels/Pexels" /* webpackChangName: 'Pexels Page '  */)
-);
-const ProductsPage = lazy(() =>
-  import("./pages/Products/Products" /* webpackChangName:' Products Page'   */)
-);
-const ImageCard = lazy(() =>
-  import(
-    "./views/PexelsImages/ImageCard" /* webpackChangName:' Image Page'   */
-  )
-);
+import { routes } from "./route";
+
 // import { SolidTitle } from './components/Titles/SolidTitle';
 function App() {
   const history = useHistory();
@@ -31,31 +20,48 @@ function App() {
   // - список
 
   // - список
-  const GoToHome = () => {
+  const backToHome = () => {
     history.push(location?.state?.from?.location ?? "/");
   };
   return (
-    <div className="App">
-      <Navigation />
-      <Suspense fallback={<Loader />}>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-
-          <Route path="/pexels">
-            <PexelsPage title="Main Title" />
-          </Route>
-          <Route exact path="/pexels/:imageId">
-            <ImageCard title="Image title" />
-          </Route>
-          <Route exact path="/products" component={ProductsPage} />
-          <Route>
-            <button type="button" onClick={GoToHome}>
-              Go To Home
-            </button>
-          </Route>
-        </Switch>
-      </Suspense>
-    </div>
+    <>
+      <header>
+        <Navigation />
+      </header>
+      <main>
+        {" "}
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            {routes.map((route) => {
+              console.log(route);
+              const { path, exact, component: Component } = route;
+              return (
+                <Route path={path} exact={exact}>
+                  <Component />
+                </Route>
+              );
+            })}
+            {/* <Route exact path="/" component={HomePage} />
+            <Route exact path="/pexels">
+              <PexelsPage title="Main Title" />
+            </Route>
+            <Route path="/pexels/:imageId">
+              <ImageCard />
+            </Route>
+            <Route exact path="/products" component={ProductsPage} /> */}
+            <Route>
+              <p>Page not found! please back to Home</p>
+              <button type="button" onClick={backToHome}>
+                back to Home
+              </button>
+            </Route>
+          </Switch>
+        </Suspense>
+      </main>
+      <footer>
+        <p>&copy; FE-35 all rights reserved 2021</p>
+      </footer>
+    </>
   );
 }
 
